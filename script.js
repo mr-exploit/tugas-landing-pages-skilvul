@@ -9,8 +9,8 @@ function handleGetFormData(){
 
    const dataForm = {
         name,
-        city,
         email,
+        city,
         zipCode,
         status
     };
@@ -35,21 +35,27 @@ function checkboxIsChecked(){
 }
 
 function validateFormData(objek) {
-    if (objek.name && objek.city && objek.email && objek.zipCode == null || !checkboxIsChecked() || !isNumber(objek.zipCode)) {
+    if (objek.name && objek.city && objek.email && objek.zipCode == null || checkboxIsChecked() == false || isNumber(objek.zipCode) == false) {
         return false;
-    } else{
+    } else {
         return true;
     }
 };
 
-function submit(){
-    const warning = document.getElementById('warning');
+function submit(event){
+   
+   const warning = document.querySelector("#warning");
 
-    if(!validateFormData(handleGetFormData())){
-        warning.innerHTML = "Periksa form anda sekali lagi";
-    } else{
-        warning.innerHTML = ""
+    if(validateFormData(handleGetFormData()) == false){
+        warning.innerText = "Periksa form anda sekali lagi"; 
+        warning.style.color = "red"; 
+
+        event.preventDefault();
+    } else if(validateFormData(handleGetFormData()) == true){
+        warning.innerText = "";
     }
+    
 }
 
-addEventListener("submit", submit());
+const form =  document.querySelector("#contact");
+form.addEventListener("submit", submit);
